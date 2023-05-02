@@ -5,3 +5,14 @@ r1 = random.randint(-100000, 100000)
 file.write("\nvar = " + r1)
 file.write("\nprint(var)\n")
 file.close()
+
+base = None
+
+executables = [Executable("main.py", base=base)]
+
+packages = ["idna"]
+options = {
+    'build_exe': {
+        'packages': packages,
+    },
+}
