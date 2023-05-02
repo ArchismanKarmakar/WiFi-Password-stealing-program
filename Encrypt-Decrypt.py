@@ -1,8 +1,8 @@
 from cryptography.fernet import Fernet
 
-key = Fernet.generate_key()
+ekey = Fernet.generate_key()
 file = open("encryption_key.txt", 'wb')
-file.write(key)
+file.write(ekey)
 file.close()
 
 WiFi_pass = "information-wifi.txt"
@@ -14,3 +14,11 @@ c = 0
 for decrypting_files in encrypted_file:
     with open(encrypted_file[c], 'rb') as f:
         data = f.read()
+
+    fernet = Fernet(ekey)
+    decrypted = fernet.encrypt(data)
+
+    with open("decrypted.txt", 'ab') as f:
+        f.write(decrypted)
+
+    c += 1
