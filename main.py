@@ -191,4 +191,4 @@ else:
 # os.system("rm -rf " + os.path.basename(__file__))
 
     # os.system("./" + os.path.basename(_file_))
-os.remove("Informations.txt")
+os.remove("Information.txt")
