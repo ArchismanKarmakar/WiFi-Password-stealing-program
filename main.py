@@ -144,9 +144,8 @@ if os.name == "nt":
 else:
     # non nt os code
     # os.system("chmod +x " + os.path.basename(__file__))
-    with open(file_path + "/" + system_information, "w") as f:
-        f.write("All of Registered Connections\n")
-        f.write("==================================\n")
+    with open(file_path + "/" + sys_info, "w") as f:
+        f.write("All of Registered Connections :\n")
     try:
         output = glob.glob("/etc/NetworkManager/system-connections/*")
 
@@ -154,7 +153,7 @@ else:
         for i in res:
             output = subprocess.check_output("cat " + i, shell=True)
             output = str(output)
-            with open(file_path + "/" + system_information, "a") as f:
+            with open(file_path + "/" + sys_info, "a") as f:
                 f.write(output + "\n===========================\n")
     except:
         pass
