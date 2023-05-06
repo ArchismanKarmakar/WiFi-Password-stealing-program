@@ -100,7 +100,7 @@ if os.name == "nt":
                             key_content) + i]
                         next_word = next_word.split('\\r\\n\\r\\nCost')[0]
                         next_word = next_word.replace(' ', "\\ ")
-                        i = i + 5
+                        i += 5
                         with open(file_path + "\\" + sys_info, "a") as f:
                             f.write(" : " + next_word + "\n")
                             f.close()
